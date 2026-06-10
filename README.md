@@ -1,3 +1,14 @@
+---
+title: System Design Agents Hub
+emoji: 🤖
+colorFrom: indigo
+colorTo: red
+sdk: docker
+app_file: app.py
+pinned: false
+---
+
+
 # AI Agent Design Patterns with Gemini API
 
 **Author:** Mahmoud Yasser
