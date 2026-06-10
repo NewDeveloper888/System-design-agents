@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>System Design Agents Hub 🚀</title>
+</head>
+<body style="font-family: Arial, sans-serif; text-align: center; margin-top: 30px; background-color: #121212; color: white;">
+    <h2>لوحة تحكم الـ AI Agents 🤖</h2>
+    <p>اختر التصميم الإستراتيجي لتشغيل المهمة:</p>
+    
+    <select id="methodInput" style="padding: 10px; width: 320px; border-radius: 5px; margin-bottom: 15px;">
+        <option value="router">Router Pattern (اكتب مثلاً: math: 5+5 أو translate: hello)</option>
+        <option value="parallel">Parallelization Method (توزيع المهمة على 3 عمال بالتوازي)</option>
+        <option value="orchestrator">Orchestrator-Worker (تقسيم ودمج المهام المعقدة)</option>
+    </select>
+    <br>
+    <input type="text" id="promptInput" placeholder="اكتب سؤالك هنا..." style="padding: 10px; width: 300px; border-radius: 5px; border: none;">
+    <button onclick="sendToAgent()" style="padding: 10px 20px; background-color: #00ffcc; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; color: black;">تشغيل الـ Agent</button>
+    
+    <div style="margin-top: 30px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: right; direction: rtl;">
+        <h3>الرد النهائي:</h3>
+        <p id="responseOutput" style="color: #ff9900; white-space: pre-wrap; background: #1e1e1e; padding: 15px; border-radius: 8px; min-height: 50px;"></p>
+    </div>
+
+    <script>
+        async function sendToAgent() {
+            const prompt = document.getElementById('promptInput').value;
+            const method = document.getElementById('methodInput').value;
+            const output = document.getElementById('responseOutput');
+            output.innerText = "جاري استدعاء الـ Agent وتوزيع المهام... انتظر ثواني 🤖⏳";
+            
+            try {
+                const response = await fetch('/run-agent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: prompt, method: method })
+                });
+                const data = await response.json();
+                output.innerText = data.agent_response || data.error;
+            } catch (err) {
+                output.innerText = "حدث خطأ في الاتصال بالسيرفر: " + err;
+            }
+        }
+    </script>
+</body>
+</html>
